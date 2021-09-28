@@ -1,0 +1,268 @@
+.header{
+    width: 100%;
+}
+.vector1{
+    position: absolute;
+    width: 26.5px;
+    height: 0px;
+    left: 5%;
+    top: 58px;
+
+    /* Blue 1 */
+
+    border: 4px solid #2F80ED;
+}
+.vector2{    
+    position: absolute;
+    width: 26.5px;
+    height: 0px;
+    left: 5%;
+    top: 70px;
+
+    /* Blue 1 */
+
+    border: 4px solid #2F80ED;
+}    
+.vector3{
+    position: absolute;
+    width: 26.5px;
+    height: 0px;
+    left: 5%;
+    top: 82px;
+
+    /* Blue 1 */
+
+    border: 4px solid #2F80ED;
+}
+.title{
+    position:absolute;
+    width: 100%;
+    height: 30px;
+    left: 7%;
+    top: 57px;
+    font-family: Cabin;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 30px;
+
+    /* Gray 1 */
+
+    color: #333333;
+}
+.question{
+    position: absolute;
+    width:100%;
+    height: 40%;
+    left: 5%;
+    top: 20%;
+
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 40px;
+    /* or 133% */
+
+
+    /* Gray 1 */
+
+    color: #333333;
+}
+.info{
+    position: absolute;
+    width: 45%;
+    height: 40%;
+    left: 5%;
+    top: 40%;
+
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #000000;
+
+}
+#user{
+    position: absolute;
+    width:45%;
+    height:60%;
+    right: 0%;
+    bottom: 0%;
+}
+/* .startbtn{
+    position: absolute;
+    left: 8.68%;
+    right: 75.09%;
+    top: 71.71%;
+    bottom: 22%;
+
+    /* Blue 1 */
+
+    /* background: #2F80ED;
+    border-radius: 4px;
+    text-align: center;
+    font-family: Inter;
+    color: #FFFFFF;
+    
+
+} */ 
+#strt{
+    position: absolute;
+    left: 5%;
+    top: 65%;
+    bottom: 30%;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 19px;
+    text-align: center;
+    
+    color: #FFFFFF;
+
+}
+/*Signup*/
+.signup{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 100%;
+    background-color: #e5e5e5;
+}
+.pg_left{
+    display: flex;
+    width: 50%;
+    right: 50%;
+    height: 1000px;
+}
+.pg_right{
+    display: flex;
+    width: 50%;
+    left: 50%;
+    top: 0px; 
+    background-color: #FFFFFF;
+}
+.signup_img{
+    position: absolute;
+    width: 40%;
+    height: 75%;
+    left: 3%;
+    top: 25%;
+}
+.pg_right > h3{
+    position: absolute;
+    width: 20%;
+    height: 27px;
+    left: 55%;
+    top: 12%;
+
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 27px;
+    /* identical to box height */
+
+
+    /* Gray 2 */
+
+    color: #4F4F4F;
+
+}
+.pg_right > h6{
+    position: absolute;
+    width: 40%;
+    height: 18px;
+    left: 55%;
+    top: 17%;
+
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 17px;
+
+    /* Gray 3 */
+
+    color: #828282;
+
+
+}
+
+.google-btn {
+position: absolute;
+    padding-bottom: 1rem;
+  left:64%;
+  top:23%;
+  width: 20%;
+  height: 50px;
+  border-radius: 6px;
+  /* box-shadow: 0 3px 4px 0 rgba(0,0,0,.25); */
+  border: 2px solid #4285f4;
+  
+}  
+  .google-icon-wrapper {
+    position: absolute;
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    background-color: #FFFFFF;
+  }
+  .google-icon {
+    position: absolute;
+    margin-top: 8px;
+    margin-left: 11px;
+  }
+  .btn-text {
+    text-align: center;
+    margin: 11px 11px 0 0;
+    color: #4285f4;
+    font-size: 18px;
+    letter-spacing: 0.2px;
+    font-family: "Roboto";
+  }
+.form{
+    position:absolute;
+    width:40%;
+    left:55%;
+    top:30%;
+}
+.text{
+    position: absolute;
+    width: 40%;
+    height: 17px;
+    left: 55%;
+    bottom: 31%;
+
+}
+
+/*Login*/
+/* #logintext{
+    bottom: 40%;
+} */
+
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:500);
+@media (max-width: 990px) {
+    .signup {
+      flex-direction: column;
+  
+    }
+    .pg_left{
+        width: 100%;
+        /* right: 50%; */
+        height: 1000px;
+    }
+    .pg_right{
+        width: 100%;
+        /* left: 50%;
+        top: 0px;  */
+        background-color: #FFFFFF;
+    }
+
+  }
