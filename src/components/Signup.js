@@ -32,7 +32,7 @@ function Signup() {
             </div>
             <div className="pg_right">
                 <h3>Create Account</h3>
-                <h6>We communicate with banks on your behalf</h6>
+                <h6>We communicate with banks on your behalf so that you can enjoy quick personalized loan recommendations</h6>
                 <a href="#">
                     <div class="google-btn">
                         <div class="google-icon-wrapper">
