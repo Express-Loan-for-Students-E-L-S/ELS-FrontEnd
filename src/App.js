@@ -10,6 +10,7 @@ import Bankacc from './components/Bankacc';
 import { useState } from 'react';
 import Adddetails from './components/Adddetails';
 import Explore from './components/Explore';
+import FAQ from './components/FAQ'
 function App() {
   
   return (
@@ -25,6 +26,8 @@ function App() {
                     <Route path="/bankdetails" component={Bankacc} />
                     <Route path="/adddetails" component={Adddetails} />
                     <Route path="/explore" component={Explore} />
+                    <Route path="/faq" component={FAQ} />
+                    
                     
                 </Switch>
             </Router>
