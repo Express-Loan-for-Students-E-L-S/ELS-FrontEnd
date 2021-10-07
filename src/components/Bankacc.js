@@ -1,96 +1,113 @@
 import React from 'react'
-import Navbar from './Navbar'
-import Steps from './Steps'
-import { TextField } from '@mui/material';
-import {Button} from '@material-ui/core';
-import { FormControl,FormControlLabel , FormLabel, RadioGroup ,Radio} from '@mui/material';
+import { Button } from '@material-ui/core';
+import { RadioGroup, Radio } from '@mui/material';
 import { useState } from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
+import { useData } from '../context/DataProvider';
+import Alert from '@mui/material/Alert';
+import './newstyles.css'
 
-function Bankacc() {
-    const [selectedValue, setSelectedValue] = useState("Bank of India");
+const Banks = [
+    {
+        id: 0,
+        bankName: "Bank of India",
+        accType: "Savings",
+        accNo: "AC / XX4000",
+        ifscCode: "BINO0466",
+    },
+    {
+        id: 1,
+        bankName: "Axis Bank",
+        accType: "Loan",
+        accNo: "AC / XX3240",
+        ifscCode: "AXISO0393",
+    },
+    {
+        id: 2,
+        bankName: "Bank of Baroda",
+        accType: "Savings",
+        accNo: "AC / XX2401",
+        ifscCode: "BOBNO0352",
+    },
+    {
+        id: 3,
+        bankName: "State Bank of India",
+        accType: "Loan",
+        accNo: "AC / XX1111",
+        ifscCode: "SBINO0492",
+    },
+]
+function Bankacc({ handleNext, handleBack }) {
+    const { userDetails, setUserDetails } = useData();
+    const [selectedValue, setSelectedValue] = useState(userDetails.selectedBank || null);
+    const [message, setMessage] = useState("");
 
     const handleChange = (event) => {
         setSelectedValue(event.target.value);
     };
-    const Banks=[
-        "Bank of India","Bank of Baroda","State Bank of India"
-    ]
+
+    const handleSelectBank = () => {
+        if(selectedValue !== null) {
+            setUserDetails({...userDetails, selectedBank: Banks[selectedValue]})
+            handleNext()
+        } else {
+            setMessage("Please select a bank account to proceed")
+        }
+    }
+
     return (
-        <div>
-            <Navbar/>
-            <Steps/>
-            <div className="box">
-                <div className="container">
-                    <h4>Bank account details</h4>
-                    <h6>To share your financial data please enter the mobile number that is linked with bank </h6>
+        <div className="box">
+            <div className="container">
+            {message !== "" && <div style={{ width: "100%", padding: '2rem 2rem 0' }}><Alert severity="error">{message}</Alert></div>}
+                <h4>Bank account details</h4>
+                <h6> Select bank account you want to share with us</h6>
 
-                    <h6> Select bank account you want to share with us</h6>
+                <div className="bnklist">
+                    <RadioGroup
+                        aria-label="gender"
+                        name="controlled-radio-buttons-group"
+                        value={selectedValue}
+                        onChange={handleChange}
+                    >
 
-                        <div className="bnklist">
-                        <List sx={{ width: '100%' }}>
-                                {Banks.map((value) => {
-                                    const labelId = `checkbox-list-label-${value}`;
-
-                                    return (
-                                    <ListItem
-                                        key={value}
-                                       
-                                    >
-                                        <ListItemButton >
-                                        <ListItemIcon>
-                                            <Radio
-                                                onChange={handleChange}
-                                                value={selectedValue}
-                                                name="radio-buttons"
-                                            />
-                                        </ListItemIcon>
-                                        <ListItemText id={labelId} primary={value} />
-                                        </ListItemButton>
-                                    </ListItem>
-                                    );
-                                })}
-                                </List>
-                           
-                                                
-
-                        </div>
-                           
-                           
-                       
-                        {/* <FormControl sx={{paddingLeft:'2rem',paddingTop:'2rem',width:'50%',paddingRight:'4rem'}}>
-                            <TextField id="filled-basic" label="Duration" variant="filled" />
-                            
-                        </FormControl> */}
-                        <div className="bttn">
-                            <Button type='submit' variant='contained'
-                                style={{
-                                    background:'#4285f4', 
-                                    color:'#FFFFFF',
-                                    height:'50px',
-                                    
-                                    
-                            }} >Continue</Button>
-
-                        </div>
-                       
-                            
-                        
-                           
-
-                        
-                        
-                    
+                        {
+                            Banks.map(bank => (
+                                <div className="bnklist__item" key={bank.id}>
+                                    <Radio
+                                        value={bank.id}
+                                        name="radio-buttons"
+                                        style={{ margin: '2px 4px' }}
+                                    />
+                                    <div className="bnklist__info">
+                                        <p className="bnklist__name">
+                                            {bank.bankName}
+                                        </p>
+                                        <p className="bnklist__acc">
+                                            {bank.accType + " " + bank.accNo}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </RadioGroup>
+                </div>
+                <div className="bttn">
+                    <Button 
+                        type='submit'
+                        style={{
+                            height: '50px',
+                        }}
+                        onClick={handleBack}
+                    >Back</Button>
+                    <Button type='submit' variant='contained'
+                        style={{
+                            background: '#4285f4',
+                            color: '#FFFFFF',
+                            height: '50px',
+                        }}
+                        onClick={handleSelectBank}
+                    >Continue</Button>
                 </div>
             </div>
-                
-
         </div>
     )
 }

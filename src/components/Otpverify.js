@@ -1,62 +1,67 @@
-import React from 'react'
-import Navbar from './Navbar'
-import Steps from './Steps'
-import { TextField } from '@mui/material';
-import {Button} from '@material-ui/core';
+import React, { useState } from 'react'
+import { Button } from '@material-ui/core';
+import OtpInput from 'react-otp-input';
+import Alert from '@mui/material/Alert';
 
-function Otpverify() {
-    const wdth={
-        width:'10%'
+function Otpverify({ setStageNo, handleBack }) {
+    // const wdth = {
+    //     width: '10%'
+    // }
+
+    const [otp, setOtp] = useState('');
+    const [message, setMessage] = useState("");
+
+    const handleOtpChange = (newotp) => setOtp(newotp);
+
+    function handleNextStage() {
+        if(otp.length === 4) {
+            setStageNo(2);
+        } else {
+            setMessage("You cannot proceed without OTP")
+        }
     }
+
+
+
     return (
-        <div>
-            <Navbar/>
-            <Steps/>
-            <div className="box">
-                <div className="container">
-                    <h4>Bank account details</h4>
-                    <h6>To share your financial data please enter the mobile number that is linked with bank </h6>
+        <div className="box">
+            <div className="container">
+            {message !== "" && <div style={{ width: "100%", padding: '2rem 2rem 0' }}><Alert severity="error">{message}</Alert></div>}
+                <h4>Bank account details</h4>
+                <h6>To share your financial data please enter the mobile number that is linked with bank </h6>
 
-                    <h6> Enter OTP sent to your mobile number</h6>
+                <h6> Enter OTP sent to your mobile number</h6>
 
-                        <div className="otpno">
-                            <TextField  style={wdth} id="standard-basic"  variant="standard" />
-                            <TextField style={wdth} id="standard-basic"  variant="standard" />
-                            <TextField style={wdth} id="standard-basic"  variant="standard" />
-                            <TextField style={wdth} id="standard-basic"  variant="standard" />
+                <div className="otpbox">
+                    <OtpInput
+                        value={otp}
+                        onChange={handleOtpChange}
+                        numInputs={4}
+                        separator={<span>-</span>}
+                        inputStyle="otp-input"
+                        isInputNum={true}
+                    />
+                </div>
+                <div className="bttn">
+                    <Button type='submit'
+                        style={{
+                            height: '50px',
+                        }}
+                        onClick={handleBack}
+                    >Back</Button>
+                    <Button type='submit' variant='contained'
+                        style={{
+                            background: '#4285f4',
+                            color: '#FFFFFF',
+                            height: '50px',
 
-                        </div>
-                           
-                           
-                       
-                        {/* <FormControl sx={{paddingLeft:'2rem',paddingTop:'2rem',width:'50%',paddingRight:'4rem'}}>
-                            <TextField id="filled-basic" label="Duration" variant="filled" />
-                            
-                        </FormControl> */}
-                        <div className="bttn">
-                            <Button type='submit' variant='contained'
-                                style={{
-                                    background:'#4285f4', 
-                                    color:'#FFFFFF',
-                                    height:'50px',
-                                    
-                                    
-                            }} >Continue</Button>
 
-                        </div>
-                       
-                            
-                        
-                           
+                        }}
+                        onClick={handleNextStage}
+                    >Verify</Button>
 
-                        
-                        
-                    
                 </div>
             </div>
-                
-            
-
         </div>
     )
 }
