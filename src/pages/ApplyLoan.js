@@ -20,7 +20,6 @@ const ApplyLoan = () => {
 
     const onFileInputChange = (prop) => (event) => {
         const { files } = event.target;
-        // setSelectedFile({...selectedFile, [prop]: files[0]})
         setLoading(prop);
         setTimeout(() => {
             setLoading('')
@@ -32,7 +31,6 @@ const ApplyLoan = () => {
                 setEntranceFile(files[0]);
             }
         }, 1500);
-        // do something with your files...
     }
 
     const { userDetails } = useData();
@@ -237,7 +235,7 @@ const ApplyLoan = () => {
                         id="filled-basic"
                         label="Account Number"
                         variant="filled"
-                        defaultValue={userDetails.selectedBank.accNo}
+                        defaultValue={userDetails.selectedBank.accountNum}
                         InputProps={{ disableUnderline: true }}
                     />
                     <TextField
@@ -269,7 +267,7 @@ const ApplyLoan = () => {
                                 type="file"
                             />
                             <label htmlFor="mk10-button-file">
-                                <Button variant="raised" component="span">
+                                <Button component="span">
                                     {
                                         loading === 'mk10' ? <CircularProgress size='24px' /> : 'Upload from device'
                                     }
@@ -291,7 +289,7 @@ const ApplyLoan = () => {
                                 type="file"
                             />
                             <label htmlFor="mk12-button-file">
-                                <Button variant="raised" component="span" >
+                                <Button component="span" >
                                     {
                                         loading === 'mk12' ? <CircularProgress size='24px' /> : 'Upload from device'
                                     }
@@ -314,7 +312,7 @@ const ApplyLoan = () => {
                                 type="file"
                             />
                             <label htmlFor="entrance-button-file">
-                                <Button variant="raised" component="span" >
+                                <Button component="span" >
                                     {
                                         loading === 'entrance' ? <CircularProgress size='24px' /> : 'Upload from device'
                                     }

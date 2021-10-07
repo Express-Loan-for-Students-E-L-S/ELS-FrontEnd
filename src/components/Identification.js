@@ -4,6 +4,8 @@ import './newstyles.css';
 import { TextField } from '@mui/material';
 import { Button } from '@material-ui/core';
 import { useData } from '../context/DataProvider'
+import axios from "axios";
+import authHeader from "../services/auth-header";
 import CircularProgress from '@mui/material/CircularProgress';
 
 function Identification({ handleNext, handleBack }) {
@@ -11,21 +13,60 @@ function Identification({ handleNext, handleBack }) {
     const [panFile, setPanFile] = useState()
     const [loading, setLoading] = useState('');
 
+    const { userDetails, setUserDetails } = useData()
+
+    const uploadAdhar = () => {
+        let formData = new FormData();
+
+        formData.append("file", adharFile);
+        formData.append("document", "adharcard");
+
+        axios.post(
+            "http://localhost:8080/api/upload",
+            formData,
+            { headers: { ...authHeader(), "Content-Type": "multipart/form-data", } }
+        ).then(response => {
+            setUserDetails({ ...userDetails, documents: { ...userDetails.documents, adharcard: response.data } })
+        })
+    }
+
     const onFileInputChange = (prop) => (event) => {
         const { files } = event.target;
         // setSelectedFile({...selectedFile, [prop]: files[0]})
         setLoading(prop);
-        setTimeout(() => {
-            setLoading('')
-            if (prop === 'adhar') {
+        if (prop === 'adharcard') {
+            let formData = new FormData();
+
+            formData.append("file", files[0]);
+            formData.append("document", "adharcard");
+
+            axios.post(
+                "http://localhost:8080/api/upload",
+                formData,
+                { headers: { ...authHeader(), "Content-Type": "multipart/form-data", } }
+            ).then(response => {
+                setUserDetails({ ...userDetails, documents: { ...userDetails.documents, adharcard: response.data } })
                 setAdharFile(files[0]);
-            } else if (prop === 'pan') {
+                setLoading('')
+            })
+
+        } else if (prop === 'pancard') {
+            let formData = new FormData();
+
+            formData.append("file", files[0]);
+            formData.append("document", "pancard");
+
+            axios.post(
+                "http://localhost:8080/api/upload",
+                formData,
+                { headers: { ...authHeader(), "Content-Type": "multipart/form-data", } }
+            ).then(response => {
+                setUserDetails({ ...userDetails, documents: { ...userDetails.documents, pancard: response.data } })
                 setPanFile(files[0]);
-            }
-        }, 1800);
-        // do something with your files...
+                setLoading('')
+            })
+        }
     }
-    const { userDetails } = useData();
     return (
         <div className="box">
             <div className="container lg">
@@ -52,16 +93,16 @@ function Identification({ handleNext, handleBack }) {
                                 adharFile ? <p style={{ color: '#2F80ED', cursor: 'pointer' }}>{adharFile.name}</p> : <p>No file uploaded</p>
                             }
                             <input
-                                onChange={onFileInputChange('adhar')}
+                                onChange={onFileInputChange('adharcard')}
                                 style={{ display: 'none' }}
                                 id="adhar-button-file"
                                 multiple
                                 type="file"
                             />
                             <label htmlFor="adhar-button-file">
-                                <Button variant="raised" component="span" >
+                                <Button component="span" >
                                     {
-                                        loading === 'adhar' ? <CircularProgress size='24px' /> : 'Upload from device'
+                                        loading === 'adharcard' ? <CircularProgress size='24px' /> : 'Upload from device'
                                     }
                                 </Button>
                             </label>
@@ -88,16 +129,16 @@ function Identification({ handleNext, handleBack }) {
                                 panFile ? <p style={{ color: '#2F80ED', cursor: 'pointer' }}>{panFile.name}</p> : <p>No file uploaded</p>
                             }
                             <input
-                                onChange={onFileInputChange('pan')}
+                                onChange={onFileInputChange('pancard')}
                                 style={{ display: 'none' }}
                                 id="pan-button-file"
                                 multiple
                                 type="file"
                             />
                             <label htmlFor="pan-button-file">
-                                <Button variant="raised" component="span" >
+                                <Button component="span" >
                                     {
-                                        loading === 'pan' ? <CircularProgress size='24px' /> : 'Upload from device'
+                                        loading === 'pancard' ? <CircularProgress size='24px' /> : 'Upload from device'
                                     }
                                 </Button>
                             </label>

@@ -3,8 +3,6 @@ import React, { useState } from 'react'
 import './newstyles.css'
 import { TextField } from '@mui/material';
 import { Button } from '@material-ui/core';
-// import axios from "axios";
-// import authHeader from "../services/auth-header";
 import { useData } from '../context/DataProvider'
 import Alert from '@mui/material/Alert';
 function Step2({ setStageNo, handleBack }) {
@@ -13,21 +11,14 @@ function Step2({ setStageNo, handleBack }) {
         setStageNo(1);
     }
 
-    const { userDetails, setUserDetails } = useData();
-      
+    const { userDetails, setUserDetails, getConnectedBanks } = useData();
+
     const [phno, setPhno] = useState("")
     const [message, setMessage] = useState("");
-    
+
     const handlePhoneNo = () => {
         if (phno !== "") {
-            // axios.post(
-            //     "http://localhost:8080/api/test/getBankDetails",
-            //     { phoneNum: phno },
-            //     { headers: authHeader() }
-            // ).then(response => {
-            //     console.log(response.data.userDetails);
-            //     setUserDetails({ ...userDetails, userBankDetails: response.data.userDetails })
-            // })
+            getConnectedBanks(phno);
             handleNextStage();
         } else {
             setMessage("Please enter phone number")
@@ -37,15 +28,15 @@ function Step2({ setStageNo, handleBack }) {
     return (
         <div className="box">
             <div className="container">
-            {message !== "" && <div style={{ width: "100%", padding: '2rem 2rem 0' }}><Alert severity="error">{message}</Alert></div>}
+                {message !== "" && <div style={{ width: "100%", padding: '2rem 2rem 0' }}><Alert severity="error">{message}</Alert></div>}
                 <h4>Bank account details</h4>
                 <h6>To share your financial data please enter the mobile number that is linked with bank </h6>
 
                 <div className="textbox">
                     <TextField sx={{ width: '15%', paddingRight: '2rem' }} label="Code" id="filled-basic" value="+91" variant="filled" InputProps={{ disableUnderline: true }} />
-                    <TextField 
-                        sx={{ width: '80%' }} id="filled-basic" 
-                        label="Please enter your mobile number" variant="filled" 
+                    <TextField
+                        sx={{ width: '80%' }} id="filled-basic"
+                        label="Please enter your mobile number" variant="filled"
                         InputProps={{ disableUnderline: true }} type="number"
                         value={phno} onChange={e => setPhno(e.target.value)} />
                 </div>

@@ -20,8 +20,8 @@ function App() {
         <Box sx={{ width: '80%', margin: '1rem auto' }}>
           <div className="box">
             <div className="container">
-              <h4 style={{color: '#64f37c'}}>Loan Application Successfull</h4>
-              <h6 style={{marginBottom: '2rem'}}>You will get a confirmation mail from bank within 2 working days</h6>
+              <h4 style={{ color: '#64f37c' }}>Loan Application Successfull</h4>
+              <h6 style={{ marginBottom: '2rem' }}>You will get a confirmation mail from bank within 2 working days</h6>
             </div>
           </div>
         </Box>
@@ -36,8 +36,8 @@ function App() {
         <Box sx={{ width: '80%', margin: '1rem auto' }}>
           <div className="box">
             <div className="container">
-              <h4 style={{color: '#64f37c'}}>Account Creation Application Successful</h4>
-              <h6 style={{marginBottom: '2rem'}}>You will get a confirmation mail from bank within 2 working days</h6>
+              <h4 style={{ color: '#64f37c' }}>Account Creation Application Successful</h4>
+              <h6 style={{ marginBottom: '2rem' }}>You will get a confirmation mail from bank within 2 working days</h6>
             </div>
           </div>
         </Box>
@@ -47,8 +47,8 @@ function App() {
 
   return (
     <div className="App">
-      <DataProvider>
-        <Router>
+      <Router>
+        <DataProvider>
           <Switch>
             <Route path="/" exact component={Welcome} />
             <Route path="/signup" component={Signup} />
@@ -58,11 +58,11 @@ function App() {
             <Route path="/applyloan" component={ApplyLoan} />
             <Route path="/loansuccess" component={LoanSuccessfull} />
             <Route path="/createsuccess" component={CreateAccountSuccessfull} />
-            
+
 
           </Switch>
-        </Router>
-      </DataProvider>
+        </DataProvider>
+      </Router>
 
     </div>
   );

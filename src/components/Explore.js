@@ -1,71 +1,34 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { useData } from '../context/DataProvider';
-const loanOptions = [
-    {
-        id: '1',
-        bankName: 'State Bank of India',
-        maxAmount: 1000000,
-        duration: 5,
-        interestRate: 8.9,
-        colatral: 500000
-    },
-    {
-        id: '2',
-        bankName: 'Bank of India',
-        maxAmount: 1100000,
-        duration: 5,
-        interestRate: 7.4,
-        colatral: 700000
-    },
-    {
-        id: '3',
-        bankName: 'Axis Bank',
-        maxAmount: 1400000,
-        duration: 6,
-        interestRate: 9.5,
-        colatral: 600000
-    },
-    {
-        id: '4',
-        bankName: 'HDFC Bank',
-        maxAmount: 1250000,
-        duration: 6,
-        interestRate: 6.6,
-        colatral: 1100000
-    },
-    {
-        id: '5',
-        bankName: 'ICICI Bank',
-        maxAmount: 1200000,
-        duration: 4,
-        interestRate: 10,
-        colatral: 600000
-    },
-    {
-        id: '6',
-        bankName: 'Bank of Baroda',
-        maxAmount: 2000000,
-        duration: 7,
-        interestRate: 7.4,
-        colatral: 1500000
-    },
-    {
-        id: '7',
-        bankName: 'Yes Bank',
-        maxAmount: 1200000,
-        duration: 4,
-        interestRate: 13.6,
-        colatral: 800000
-    },
-]
-
+import axios from "axios";
+import authHeader from "../services/auth-header";
 
 function Explore({ handleBack, handleNext }) {
 
+    const [loanOptions, setLoanOptions] = useState(null)
     const history = useHistory()
     const { userDetails, setUserDetails } = useData();
+
+    useEffect(() => {
+        let obj = {
+            fname: userDetails.fname,
+            lname: userDetails.lname,
+            dob: userDetails.dob,
+            phoneNum: userDetails.phoneNum,
+            ...userDetails.educationalDetails
+        }
+        axios.post(
+            "http://localhost:8080/api/user/requestLoanOptions",
+            { exploreinfo: obj },
+            { headers: authHeader() }
+        ).then(response => {
+            setLoanOptions(response.data.options.loanOptions);
+        })
+    }, [userDetails])
+
+
 
     const handleApply = (id) => {
         setUserDetails({...userDetails, selectedLoan: loanOptions.find(t => t.id === id)})
@@ -79,6 +42,8 @@ function Explore({ handleBack, handleNext }) {
                 <h6>Choose a loan to apply</h6>
                 <div className="loanopt__list">
                     {
+                        loanOptions
+                        ?
                         loanOptions.map(opt => (
                             <div className="loanopt__item" key={opt.id}>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
@@ -116,6 +81,8 @@ function Explore({ handleBack, handleNext }) {
                                 </div>
                             </div>
                         ))
+                        :
+                        <p>Fetching loan options</p>
                     }
                 </div>
                 <div className="bttn">

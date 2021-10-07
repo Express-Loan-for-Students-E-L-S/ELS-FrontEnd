@@ -4,13 +4,29 @@ import './newstyles.css';
 import { Button } from '@material-ui/core';
 import { FileDrop } from 'react-file-drop';
 import { useData } from '../context/DataProvider'
-import userService from '../services/user.service'
+import axios from "axios";
+import authHeader from "../services/auth-header";
 
 function UploadDocuments({ handleNext, handleBack }) {
     const fileInputRef = useRef(null);
     const [selectedFile, setSelectedFile] = useState(null)
     const { userDetails, setUserDetails } = useData()
     const [preview, setPreview] = useState()
+
+    const handleBeforeNext = () => {
+        let formData = new FormData();
+
+        formData.append("file", selectedFile);
+        formData.append("document", "profile");
+
+        axios.post(
+            "http://localhost:8080/api/upload",
+            formData,
+            { headers: { ...authHeader(), "Content-Type": "multipart/form-data", } }
+        ).then(response => {
+            setUserDetails({...userDetails, documents: {...userDetails.documents, profile: response.data}})
+        })
+    }
 
     const onFileInputChange = (event) => {
         const { files } = event.target;
@@ -74,7 +90,7 @@ function UploadDocuments({ handleNext, handleBack }) {
                             color: '#FFFFFF',
                             height: '50px',
                         }}
-                        onClick={handleNext}
+                        onClick={handleBeforeNext}
                     >Continue</Button>
                 </div>
             </div>

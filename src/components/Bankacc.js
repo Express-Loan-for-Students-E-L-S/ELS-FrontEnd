@@ -6,38 +6,8 @@ import { useData } from '../context/DataProvider';
 import Alert from '@mui/material/Alert';
 import './newstyles.css'
 
-const Banks = [
-    {
-        id: 0,
-        bankName: "Bank of India",
-        accType: "Savings",
-        accNo: "AC / XX4000",
-        ifscCode: "BINO0466",
-    },
-    {
-        id: 1,
-        bankName: "Axis Bank",
-        accType: "Loan",
-        accNo: "AC / XX3240",
-        ifscCode: "AXISO0393",
-    },
-    {
-        id: 2,
-        bankName: "Bank of Baroda",
-        accType: "Savings",
-        accNo: "AC / XX2401",
-        ifscCode: "BOBNO0352",
-    },
-    {
-        id: 3,
-        bankName: "State Bank of India",
-        accType: "Loan",
-        accNo: "AC / XX1111",
-        ifscCode: "SBINO0492",
-    },
-]
 function Bankacc({ handleNext, handleBack }) {
-    const { userDetails, setUserDetails } = useData();
+    const { userDetails, setUserDetails, getBankDetails } = useData();
     const [selectedValue, setSelectedValue] = useState(userDetails.selectedBank || null);
     const [message, setMessage] = useState("");
 
@@ -47,8 +17,7 @@ function Bankacc({ handleNext, handleBack }) {
 
     const handleSelectBank = () => {
         if(selectedValue !== null) {
-            setUserDetails({...userDetails, selectedBank: Banks[selectedValue]})
-            handleNext()
+            getBankDetails(selectedValue, handleNext)
         } else {
             setMessage("Please select a bank account to proceed")
         }
@@ -70,7 +39,9 @@ function Bankacc({ handleNext, handleBack }) {
                     >
 
                         {
-                            Banks.map(bank => (
+                            userDetails.connectedBankAccounts 
+                            ?
+                            userDetails.connectedBankAccounts.map(bank => (
                                 <div className="bnklist__item" key={bank.id}>
                                     <Radio
                                         value={bank.id}
@@ -82,11 +53,13 @@ function Bankacc({ handleNext, handleBack }) {
                                             {bank.bankName}
                                         </p>
                                         <p className="bnklist__acc">
-                                            {bank.accType + " " + bank.accNo}
+                                            {bank.accountType + " " + bank.accountNum}
                                         </p>
                                     </div>
                                 </div>
                             ))
+                            :
+                            <p>No connected banks account found</p>
                         }
                     </RadioGroup>
                 </div>

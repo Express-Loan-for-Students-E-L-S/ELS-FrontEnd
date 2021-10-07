@@ -54,10 +54,10 @@ function Adddetails({ handleNext, handleBack }) {
                         sx={{ width: '33%' }}
                         id="filled-basic"
                         label="Date od Birth"
-                        // InputLabelProps={{ shrink: true }}
+                        InputLabelProps={{ shrink: true }}
                         variant="filled"
                         type="date"
-                        value={userDetails.dob}
+                        defaultValue={userDetails.dob}
                         InputProps={{ disableUnderline: true }}
                     />
                     <TextField
